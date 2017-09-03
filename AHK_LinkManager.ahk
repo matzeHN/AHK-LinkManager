@@ -35,7 +35,7 @@ global G_NSepKey 	:= "Separator"	; Keyword for Seperator-Definition in ini-File
 global G_MAX_MenuDepth := 10		; Defines maximum count of Menu levels. "1" means there are no nodes allowed
 
 Menu, Tray, Icon, shell32.dll, 4 	; Changes Tray-Icon to build in icons (see C:\Windows\System32\shell32.dll)
-Menu, Tray, TIp, AHK-LinkManager %G_VersionString% ; Tooltip für TrayIcon: Shows Version
+Menu, Tray, TIp, AHK-LinkManager %G_VersionString% ; Tooltip fÃ¼r TrayIcon: Shows Version
 
 ;**********************************************************
 ; Setup shortcut
@@ -113,7 +113,7 @@ TrayMenuHandler:
 	}
 	else if (A_ThisMenuItem == "Help")
 	{
-		MsgBox,% "Default shortcut is Win+Alt+J" or Win+MidMouseButton
+		MsgBox,% "Default shortcut is Win+Alt+J or Win+MidMouseButton"
 	}
 return
 
