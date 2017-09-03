@@ -13,6 +13,9 @@
 ; 		- GUI for link-menu set-up
 ;		- Basic GUI functions, no great in effort put in ergonomical design
 ;		- Several approvements in code appearence and tecnique
+; Version 0.8:
+; 		- Bugfix: help menu MsgBox
+;		- Feature: defined notification for not found files ot paths
 ;
 
 #NoEnv  		; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -35,7 +38,7 @@ global G_NSepKey 	:= "Separator"	; Keyword for Seperator-Definition in ini-File
 global G_MAX_MenuDepth := 10		; Defines maximum count of Menu levels. "1" means there are no nodes allowed
 
 Menu, Tray, Icon, shell32.dll, 4 	; Changes Tray-Icon to build in icons (see C:\Windows\System32\shell32.dll)
-Menu, Tray, TIp, AHK-LinkManager %G_VersionString% ; Tooltip für TrayIcon: Shows Version
+Menu, Tray, TIp, AHK-LinkManager %G_VersionString% ; Tooltip fÃ¼r TrayIcon: Shows Version
 
 ;**********************************************************
 ; Setup shortcut
@@ -139,7 +142,10 @@ Loop % JumpStack.MaxIndex()
 			; Execute stored Path or URL or file of selected leaf
 			if (A_ThisMenuItem == CurrentLeaf)
 			{
-				Run, % SelectedNode[A_Index, 3]
+				IfExist, % SelectedNode[A_Index,3]
+					Run, % SelectedNode[A_Index, 3]
+				else
+					MsgBox, The target path or file does not exist.
 			}
 		}
 		break
