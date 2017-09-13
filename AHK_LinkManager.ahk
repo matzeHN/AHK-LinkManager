@@ -49,7 +49,7 @@ global G_ManagerGUIname := "LinkManager Setup"
 global G_MAX_MenuDepth := 10		; Defines maximum count of Menu levels. "1" means there are no nodes allowed
 
 Menu, Tray, Icon, shell32.dll, 4 	; Changes Tray-Icon to build in icons (see C:\Windows\System32\shell32.dll)
-Menu, Tray, TIp, AHK-LinkManager %G_VersionString% ; Tooltip für TrayIcon: Shows Version
+Menu, Tray, TIp, AHK-LinkManager %G_VersionString% ; Tooltip fÃ¼r TrayIcon: Shows Version
 
 ;**********************************************************
 ; Setup shortcut
@@ -162,7 +162,39 @@ Loop % JumpStack.MaxIndex()
 			; Execute stored Path or URL or file of selected leaf
 			if (A_ThisMenuItem == CurrentLeaf)
 			{
-				Run, % SelectedNode[A_Index, 3]
+				;URL check
+				If InStr(SelectedNode[A_Index, 3], "www.")
+				{
+					If InStr(SelectedNode[A_Index, 3], "http://")
+					{
+						URL := SelectedNode[A_Index, 3]
+					}
+					else
+					{
+						URL := "http://" SelectedNode[A_Index, 3]
+					}
+					if CheckURL(URL)
+					{
+						Run, % URL
+					}
+					else
+					{
+						MsgBox, "Sorry, the URL: %URL% is unfortunately not available"
+					}
+				}
+				;Path check
+				else
+				{
+					Path := SelectedNode[A_Index, 3]
+					IfNotExist, % Path
+					{
+						MsgBox, "Sorry, the folder or file (%Path%) is currently unavailable or does not exist"
+					}
+					else
+					{
+						Run, % Path
+					}
+				}
 			}
 		}
 		break
